@@ -38,8 +38,7 @@ jobs:
 
       - name: Deploy to Kong Konnect
         run: |
-          deck gateway sync \
+          deck gateway sync api/kong.yaml \
             --konnect-token "${{ secrets.KONNECT_TOKEN }}" \
-            --konnect-control-plane-name "${{ steps.env.outputs.cp_name }}" \
-            -s api/kong.yaml \
+            --konnect-control-plane-name "${{ secrets.KONNECT_CONTROL_PLANE_NAME }}" \
             --yes
