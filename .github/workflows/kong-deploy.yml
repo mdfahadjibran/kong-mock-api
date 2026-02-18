@@ -37,7 +37,7 @@ jobs:
 
       - name: Deploy to Konnect
         run: |
-          deck gateway sync api/kong.yml \
+          deck gateway sync api/kong.yaml \
             --konnect-token "${{ secrets.KONNECT_TOKEN }}" \
             --konnect-control-plane-name "$CP_NAME" \
             --konnect-addr https://me.api.konghq.com \
