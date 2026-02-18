@@ -33,7 +33,7 @@ jobs:
 
       - name: Validate Kong config
         run: |
-          deck file validate api/kong.yml
+          deck file validate api/kong.yaml
 
       - name: Deploy to Konnect
         run: |
