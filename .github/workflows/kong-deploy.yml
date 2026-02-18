@@ -1,4 +1,4 @@
-name: Deploy Kong Gateway Config
+name: Deploy Kong Config
 
 on:
   push:
@@ -17,28 +17,28 @@ jobs:
 
       - name: Install decK
         run: |
-          curl -L https://github.com/kong/deck/releases/download/v1.55.2/deck_1.55.2_linux_amd64.tar.gz -o deck.tar.gz
-          tar -xzf deck.tar.gz
+          curl -sL https://github.com/kong/deck/releases/download/v1.55.2/deck_1.55.2_linux_amd64.tar.gz | tar -xz
           sudo mv deck /usr/local/bin/deck
 
-      - name: Pick Control Plane based on branch
-        id: env
+      - name: Select Control Plane based on branch
+        id: cp
         run: |
-          if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
-            echo "cp_name=${{ secrets.KONNECT_CP_NAME_DEV }}" >> $GITHUB_OUTPUT
-          elif [[ "${GITHUB_REF_NAME}" == "uat" ]]; then
-            echo "cp_name=${{ secrets.KONNECT_CP_NAME_UAT }}" >> $GITHUB_OUTPUT
-          elif [[ "${GITHUB_REF_NAME}" == "prod" ]]; then
-            echo "cp_name=${{ secrets.KONNECT_CP_NAME_PROD }}" >> $GITHUB_OUTPUT
+          if [ "${GITHUB_REF_NAME}" = "dev" ]; then
+            echo "CP_NAME=${{ secrets.KONNECT_CP_NAME_DEV }}" >> $GITHUB_ENV
+          elif [ "${GITHUB_REF_NAME}" = "uat" ]; then
+            echo "CP_NAME=${{ secrets.KONNECT_CP_NAME_UAT }}" >> $GITHUB_ENV
+          elif [ "${GITHUB_REF_NAME}" = "prod" ]; then
+            echo "CP_NAME=${{ secrets.KONNECT_CP_NAME_PROD }}" >> $GITHUB_ENV
           fi
 
       - name: Validate Kong config
         run: |
-          deck validate -s api/kong.yaml
+          deck file validate api/kong.yml
 
-      - name: Deploy to Kong Konnect
+      - name: Deploy to Konnect
         run: |
-          deck gateway sync api/kong.yaml \
+          deck gateway sync api/kong.yml \
             --konnect-token "${{ secrets.KONNECT_TOKEN }}" \
-            --konnect-control-plane-name "${{ secrets.KONNECT_CONTROL_PLANE_NAME }}" \
+            --konnect-control-plane-name "$CP_NAME" \
+            --konnect-addr https://me.api.konghq.com \
             --yes
