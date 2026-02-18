@@ -1,0 +1,45 @@
+name: Deploy Kong Gateway Config
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install decK
+        run: |
+          curl -L https://github.com/kong/deck/releases/download/v1.55.2/deck_1.55.2_linux_amd64.tar.gz -o deck.tar.gz
+          tar -xzf deck.tar.gz
+          sudo mv deck /usr/local/bin/deck
+
+      - name: Pick Control Plane based on branch
+        id: env
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+            echo "cp_name=${{ secrets.KONNECT_CP_NAME_DEV }}" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF_NAME}" == "uat" ]]; then
+            echo "cp_name=${{ secrets.KONNECT_CP_NAME_UAT }}" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF_NAME}" == "prod" ]]; then
+            echo "cp_name=${{ secrets.KONNECT_CP_NAME_PROD }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate Kong config
+        run: |
+          deck validate -s api/kong.yaml
+
+      - name: Deploy to Kong Konnect
+        run: |
+          deck gateway sync \
+            --konnect-token "${{ secrets.KONNECT_TOKEN }}" \
+            --konnect-control-plane-name "${{ steps.env.outputs.cp_name }}" \
+            -s api/kong.yaml \
+            --yes
