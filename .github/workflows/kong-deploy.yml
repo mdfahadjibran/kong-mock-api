@@ -61,6 +61,5 @@ jobs:
               --konnect-control-plane-name "$CP_NAME" \
               --konnect-addr https://me.api.konghq.com \
               --select-tag managed-by-deck \
-              --non-strict \
               --yes
           done
