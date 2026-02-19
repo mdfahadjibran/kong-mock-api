@@ -35,12 +35,10 @@ jobs:
           fi
 
       - name: Find Kong config files
-        id: files
         run: |
-          echo "Discovering Kong config files..."
-          FILES=$(find . -type f \( -name "*.yaml" -o -name "*.yml" -o -name "*.json" \))
+          FILES=$(find api -type f \( -name "*.yaml" -o -name "*.yml" -o -name "*.json" \))
           if [ -z "$FILES" ]; then
-            echo "No Kong config files found!"
+            echo "No Kong config files found under api/"
             exit 1
           fi
           echo "FILES<<EOF" >> $GITHUB_ENV
