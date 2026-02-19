@@ -1,0 +1,777 @@
+_format_version: "3.0"
+_konnect:
+  control_plane_name: kong-local-dev
+services:
+- connect_timeout: 60000
+  enabled: true
+  host: example.com
+  name: mock-service
+  port: 443
+  protocol: https
+  read_timeout: 60000
+  retries: 5
+  routes:
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: accounts-route
+    path_handling: v0
+    paths:
+    - /accounts
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Accounts API
+            version: "1.0.0"
+          paths:
+            /accounts:
+              get:
+                responses:
+                  "200":
+                    description: Account list
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              accountId: { type: string }
+                              type: { type: string }
+                              balance: { type: number }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: auth-route
+    path_handling: v0
+    paths:
+    - /auth
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Auth API
+            version: "1.0.0"
+          paths:
+            /auth:
+              post:
+                responses:
+                  "200":
+                    description: Auth token
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            accessToken: { type: string }
+                            expiresIn: { type: number }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: balance-route
+    path_handling: v0
+    paths:
+    - /balance
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Balance API
+            version: "1.0.0"
+          paths:
+            /balance:
+              get:
+                responses:
+                  "200":
+                    description: Balance
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            accountId: { type: string }
+                            availableBalance: { type: number }
+                            currency: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: beneficiaries-route
+    path_handling: v0
+    paths:
+    - /beneficiaries
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Beneficiaries API
+            version: "1.0.0"
+          paths:
+            /beneficiaries:
+              get:
+                responses:
+                  "200":
+                    description: Beneficiaries list
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name: { type: string }
+                              account: { type: string }
+                              bank: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: cards-route
+    path_handling: v0
+    paths:
+    - /cards
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Cards API
+            version: "1.0.0"
+          paths:
+            /cards:
+              get:
+                responses:
+                  "200":
+                    description: Cards list
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              cardNumber: { type: string }
+                              type: { type: string }
+                              status: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: customer-route
+    path_handling: v0
+    paths:
+    - /customer
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Customer Mock API
+            version: "1.0.0"
+          paths:
+            /customer:
+              get:
+                responses:
+                  "200":
+                    description: Random customer
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            customerName: { type: string }
+                            customerId: { type: string }
+                            customerAcc: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: health-route
+    path_handling: v0
+    paths:
+    - /health
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Health API
+            version: "1.0.0"
+          paths:
+            /health:
+              get:
+                responses:
+                  "200":
+                    description: Health status
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            status: { type: string }
+                            timestamp: { type: string, format: date-time }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: kyc-route
+    path_handling: v0
+    paths:
+    - /kyc
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: KYC API
+            version: "1.0.0"
+          paths:
+            /kyc:
+              get:
+                responses:
+                  "200":
+                    description: KYC status
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            kycStatus: { type: string }
+                            lastUpdated: { type: string, format: date }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: limits-route
+    path_handling: v0
+    paths:
+    - /limits
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Limits API
+            version: "1.0.0"
+          paths:
+            /limits:
+              get:
+                responses:
+                  "200":
+                    description: Limits
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            dailyLimit: { type: number }
+                            usedLimit: { type: number }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: loans-route
+    path_handling: v0
+    paths:
+    - /loans
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Loans API
+            version: "1.0.0"
+          paths:
+            /loans:
+              get:
+                responses:
+                  "200":
+                    description: Loans list
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              loanId: { type: string }
+                              principal: { type: number }
+                              status: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    name: mock-route
+    path_handling: v0
+    paths:
+    - /mock
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Employee Mock API
+            version: "1.0.0"
+          paths:
+            /mock:
+              get:
+                responses:
+                  "200":
+                    description: Random employee
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            firstName: { type: string }
+                            middleName: { type: string }
+                            birthDate: { type: string, format: date }
+                            empId: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: notifications-route
+    path_handling: v0
+    paths:
+    - /notifications
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Notifications API
+            version: "1.0.0"
+          paths:
+            /notifications:
+              get:
+                responses:
+                  "200":
+                    description: Notifications
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id: { type: string }
+                              message: { type: string }
+                              read: { type: boolean }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - POST
+    name: payments-route
+    path_handling: v0
+    paths:
+    - /payments
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Payments API
+            version: "1.0.0"
+          paths:
+            /payments:
+              post:
+                responses:
+                  "201":
+                    description: Payment created
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            paymentId: { type: string }
+                            status: { type: string }
+                            message: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: profile-route
+    path_handling: v0
+    paths:
+    - /profile
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Profile API
+            version: "1.0.0"
+          paths:
+            /profile:
+              get:
+                responses:
+                  "200":
+                    description: User profile
+                    content:
+                      application/json:
+                        schema:
+                          type: object
+                          properties:
+                            name: { type: string }
+                            email: { type: string }
+                            mobile: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: transactions-route
+    path_handling: v0
+    paths:
+    - /transactions
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Transactions API
+            version: "1.0.0"
+          paths:
+            /transactions:
+              get:
+                responses:
+                  "200":
+                    description: Transaction list
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              txnId: { type: string }
+                              amount: { type: number }
+                              txnDate: { type: string, format: date-time }
+                              status: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+  write_timeout: 60000
