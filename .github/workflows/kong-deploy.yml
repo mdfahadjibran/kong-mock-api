@@ -6,6 +6,7 @@ on:
       - dev
       - uat
       - prod
+  workflow_dispatch: {}
 
 jobs:
   deploy:
@@ -21,7 +22,6 @@ jobs:
           sudo mv deck /usr/local/bin/deck
 
       - name: Select Control Plane based on branch
-        id: cp
         run: |
           if [ "${GITHUB_REF_NAME}" = "dev" ]; then
             echo "CP_NAME=${{ secrets.KONNECT_CP_NAME_DEV }}" >> $GITHUB_ENV
@@ -29,16 +29,37 @@ jobs:
             echo "CP_NAME=${{ secrets.KONNECT_CP_NAME_UAT }}" >> $GITHUB_ENV
           elif [ "${GITHUB_REF_NAME}" = "prod" ]; then
             echo "CP_NAME=${{ secrets.KONNECT_CP_NAME_PROD }}" >> $GITHUB_ENV
+          else
+            echo "Unsupported branch: ${GITHUB_REF_NAME}"
+            exit 1
           fi
 
-      - name: Validate Kong config
+      - name: Find Kong config files
         run: |
-          deck file validate api/kong.yaml
+          FILES=$(find api -type f \( -name "*.yaml" -o -name "*.yml" -o -name "*.json" \))
+          if [ -z "$FILES" ]; then
+            echo "No Kong config files found under api/"
+            exit 1
+          fi
+          echo "FILES<<EOF" >> $GITHUB_ENV
+          echo "$FILES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
-      - name: Deploy to Konnect
+      - name: Validate Kong config files
         run: |
-          deck gateway sync api/kong.yaml \
-            --konnect-token "${{ secrets.KONNECT_TOKEN }}" \
-            --konnect-control-plane-name "$CP_NAME" \
-            --konnect-addr https://me.api.konghq.com \
-            --yes
+          for file in $FILES; do
+            echo "Validating $file"
+            deck file validate "$file"
+          done
+
+      - name: Deploy to Konnect (Multi-file)
+        run: |
+          for file in $FILES; do
+            echo "Deploying $file to control plane $CP_NAME"
+            deck gateway sync "$file" \
+              --konnect-token "${{ secrets.KONNECT_TOKEN }}" \
+              --konnect-control-plane-name "$CP_NAME" \
+              --konnect-addr https://me.api.konghq.com \
+              --select-tag managed-by-deck \
+              --yes
+          done
