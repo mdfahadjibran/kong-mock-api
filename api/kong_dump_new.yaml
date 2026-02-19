@@ -774,4 +774,57 @@ services:
     request_buffering: true
     response_buffering: true
     strip_path: true
+  - https_redirect_status_code: 426
+    methods:
+    - GET
+    name: transactions-route-second
+    path_handling: v0
+    paths:
+    - /transactions/debt
+    plugins:
+    - config:
+        api_specification: |+
+          openapi: 3.0.3
+          info:
+            title: Transactions API
+            version: "1.0.0"
+          paths:
+            /transactions/debt:
+              get:
+                responses:
+                  "200":
+                    description: Transaction list
+                    content:
+                      application/json:
+                        schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              txnId: { type: string }
+                              amount: { type: number }
+                              txnDate: { type: string, format: date-time }
+                              status: { type: string }
+
+        api_specification_filename: null
+        custom_base_path: null
+        include_base_path: false
+        included_status_codes: null
+        max_delay_time: 1
+        min_delay_time: 0.001
+        random_delay: false
+        random_examples: false
+        random_status_code: false
+      enabled: true
+      name: mocking
+      protocols:
+      - http
+      - https
+    preserve_host: false
+    protocols:
+    - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
   write_timeout: 60000
