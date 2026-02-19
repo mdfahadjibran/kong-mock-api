@@ -16,6 +16,7 @@ services:
   routes:
   # -------- Route 1: /mock (Employee) --------
   - name: get-monthly-report
+    tags: [managed-by-deck]
     paths:
       - /mock
     methods: [GET, POST, PUT, PATCH]
@@ -51,6 +52,7 @@ services:
 
   # -------- Route 2: /customer --------
   - name: customer-route
+    tags: [managed-by-deck]
     paths: [/customer]
     methods: [GET]
     protocols: [https]
@@ -83,6 +85,7 @@ services:
 
   # -------- Route 3: /accounts --------
   - name: accounts-route
+    tags: [managed-by-deck]
     paths: [/accounts]
     methods: [GET]
     protocols: [https]
@@ -117,6 +120,7 @@ services:
 
   # -------- Route 4: /balance --------
   - name: balance-route
+    tags: [managed-by-deck]
     paths: [/balance]
     methods: [GET]
     protocols: [https]
@@ -149,6 +153,7 @@ services:
 
   # -------- Route 5: /transactions --------
   - name: transactions-route
+    tags: [managed-by-deck]
     paths: [/transactions]
     methods: [GET]
     protocols: [https]
@@ -184,6 +189,7 @@ services:
 
   # -------- Route 6: /payments --------
   - name: payments-route
+    tags: [managed-by-deck]
     paths: [/payments]
     methods: [POST]
     protocols: [https]
@@ -216,6 +222,7 @@ services:
 
   # -------- Route 7: /cards --------
   - name: cards-route
+    tags: [managed-by-deck]
     paths: [/cards]
     methods: [GET]
     protocols: [https]
@@ -250,6 +257,7 @@ services:
 
   # -------- Route 8: /loans --------
   - name: loans-route
+    tags: [managed-by-deck]
     paths: [/loans]
     methods: [GET]
     protocols: [https]
@@ -284,6 +292,7 @@ services:
 
   # -------- Route 9: /auth --------
   - name: auth-route
+    tags: [managed-by-deck]
     paths: [/auth]
     methods: [POST]
     protocols: [https]
@@ -315,6 +324,7 @@ services:
 
   # -------- Route 10: /profile --------
   - name: profile-route
+    tags: [managed-by-deck]
     paths: [/profile]
     methods: [GET]
     protocols: [https]
@@ -347,6 +357,7 @@ services:
 
   # -------- Route 11: /kyc --------
   - name: kyc-route
+    tags: [managed-by-deck]
     paths: [/kyc]
     methods: [GET]
     protocols: [https]
@@ -378,6 +389,7 @@ services:
 
   # -------- Route 12: /limits --------
   - name: limits-route
+    tags: [managed-by-deck]
     paths: [/limits]
     methods: [GET]
     protocols: [https]
@@ -409,6 +421,7 @@ services:
 
   # -------- Route 13: /beneficiaries --------
   - name: beneficiaries-route
+    tags: [managed-by-deck]
     paths: [/beneficiaries]
     methods: [GET]
     protocols: [https]
@@ -443,6 +456,7 @@ services:
 
   # -------- Route 14: /notifications --------
   - name: notifications-route
+    tags: [managed-by-deck]
     paths: [/notifications]
     methods: [GET]
     protocols: [https]
@@ -477,6 +491,7 @@ services:
 
   # -------- Route 15: /health --------
   - name: health-route
+    tags: [managed-by-deck]
     paths: [/health]
     methods: [GET]
     protocols: [https]
